@@ -28,7 +28,7 @@ group :development, :test do
   gem 'guard-rspec'
 
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3', '~> 2.1'
+gem "sqlite3", "~> 2.7"
 
 end
 
