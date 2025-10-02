@@ -16,9 +16,9 @@
   <br><br>
   
   Sort by:
-  <%= select_tag 'sort_by', options_for_select([['Title', 'title'], ['Release Date', 'release_date']], @sort_by), 
-    id: 'sort_by', 
-    include_blank: true %>
+  <%= select_tag 'sort_by', 
+      options_for_select([['Title', 'title'], ['Release Date', 'release_date']], @sort_by), 
+      id: 'sort_by' %>
   
   <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
 <% end %>
