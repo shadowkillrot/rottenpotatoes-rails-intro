@@ -23,7 +23,7 @@ class MoviesController < ApplicationController
     
     # If we restored from session, redirect to RESTful URL with params visible
     if redirect_needed
-      redirect_to movies_path(sort_by: params[:sort_by], ratings: params[:ratings]) and return
+      redirect_to movies_path(sort_by: params[:sort_by], ratings: session[:ratings]) and return
     end
     
     # Handle ratings filter
