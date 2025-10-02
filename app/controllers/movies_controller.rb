@@ -6,37 +6,36 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @all_ratings = Movie.all_ratings
-    
-    
-    if params[:ratings].nil? && params[:sort].nil? && (session[:ratings].present? || session[:sort].present?)
-      
-      params[:ratings] = session[:ratings] if session[:ratings].present?
-      params[:sort] = session[:sort] if session[:sort].present?
-    end
-    
-   
-    if params[:ratings].present?
-      @ratings_to_show = params[:ratings].keys
-      session[:ratings] = params[:ratings]
-    else
-      @ratings_to_show = @all_ratings
-      session[:ratings] = Hash[@all_ratings.map { |r| [r, "1"] }]
-    end
-    
-    
-    @movies = Movie.with_ratings(@ratings_to_show)
-    
-    
-    if params[:sort].present?
-      @sort_by = params[:sort]
-      @movies = @movies.order(@sort_by)
-      session[:sort] = params[:sort]
-    else
-      @sort_by = nil
-      session.delete(:sort)
-    end
+  @all_ratings = Movie.all_ratings
+  
+  # Determine if we should use session data
+  if params[:ratings].nil? && params[:sort_by].nil? && (session[:ratings].present? || session[:sort_by].present?)
+    params[:ratings] = session[:ratings] if session[:ratings].present?
+    params[:sort_by] = session[:sort_by] if session[:sort_by].present?
   end
+  
+  # Handle ratings filter
+  if params[:ratings].present?
+    @ratings_to_show = params[:ratings].keys
+    session[:ratings] = params[:ratings]
+  else
+    @ratings_to_show = @all_ratings
+    session[:ratings] = Hash[@all_ratings.map { |r| [r, "1"] }]
+  end
+  
+  # Get movies with ratings filter
+  @movies = Movie.with_ratings(@ratings_to_show)
+  
+  # Handle sorting
+  if params[:sort_by].present?
+    @sort_by = params[:sort_by]
+    @movies = @movies.order(@sort_by)
+    session[:sort_by] = params[:sort_by]
+  else
+    @sort_by = nil
+    session.delete(:sort_by)
+  end
+end
 
   def new
   end
